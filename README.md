@@ -1,5 +1,4 @@
 # Keydrop Giveaway Bot
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/zbleszczak/Keydrop)
 
 This repository contains an advanced Python bot designed to automatically join giveaways on Keydrop.com. It features a sophisticated master/worker architecture for multi-account synchronization, a robust authentication system, and a comprehensive web dashboard for real-time monitoring and control.
 
