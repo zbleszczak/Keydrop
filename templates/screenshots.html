@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyDrop Bot - Screenshots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-link {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .filters {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        select, input {
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+        }
+
+        select option {
+            background: #764ba2;
+            color: white;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .screenshot-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .screenshot-info {
+            padding: 15px;
+        }
+
+        .screenshot-name {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .screenshot-meta {
+            font-size: 12px;
+            opacity: 0.7;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .badge-after {
+            background: #ef4444;
+        }
+
+        .badge-before {
+            background: #10b981;
+        }
+
+        .badge-nobtn {
+            background: #f59e0b;
+        }
+
+        /* Modal for full-size image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            font-weight: 300;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📸 Screenshots Viewer</h1>
+            <div class="nav-links">
+                <a href="/" class="nav-link">← Dashboard</a>
+                <button class="nav-link" onclick="location.reload()" style="border: none; cursor: pointer;">🔄 Refresh</button>
+            </div>
+        </div>
+
+        <div class="filters">
+            <div class="filter-group">
+                <label>Account:</label>
+                <select id="filter-account" onchange="filterScreenshots()">
+                    <option value="">All Accounts</option>
+                    <option value="bay">bay</option>
+                    <option value="keydropbot1337">keydropbot1337</option>
+                    <option value="keydropbot1338">keydropbot1338</option>
+                    <option value="keydropbot1339">keydropbot1339</option>
+                    <option value="keydropbot1340">keydropbot1340</option>
+                    <option value="keydropbot1343">keydropbot1343</option>
+                    <option value="keydropbot1344">keydropbot1344</option>
+                    <option value="vigiel">vigiel</option>
+                    <option value="sobieski">sobieski</option>
+                    <option value="maciek">maciek</option>
+                    <option value="zbleszczak">zbleszczak</option>
+                    <option value="chincyk">chincyk</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Type:</label>
+                <select id="filter-type" onchange="filterScreenshots()">
+                    <option value="">All Types</option>
+                    <option value="BEFORE">BEFORE</option>
+                    <option value="AFTER">AFTER</option>
+                    <option value="NO_BTN">NO_BTN</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Search:</label>
+                <input type="text" id="search-input" placeholder="Search filename..." onkeyup="filterScreenshots()">
+            </div>
+
+            <div class="filter-group" style="margin-left: auto;">
+                <span id="count-text">Loading...</span>
+            </div>
+        </div>
+
+        <div id="screenshots-container" class="screenshots-grid">
+            <div class="loading">Loading screenshots...</div>
+        </div>
+    </div>
+
+    <!-- Modal for full-size image -->
+    <div id="image-modal" class="modal" onclick="closeModal()">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modal-image">
+    </div>
+
+    <script>
+        let allScreenshots = [];
+
+        async function loadScreenshots() {
+            try {
+                const response = await fetch('/api/screenshots');
+                const data = await response.json();
+                allScreenshots = data.screenshots;
+                filterScreenshots();
+            } catch (error) {
+                console.error('Error loading screenshots:', error);
+                document.getElementById('screenshots-container').innerHTML =
+                    '<div class="loading">Error loading screenshots</div>';
+            }
+        }
+
+        function filterScreenshots() {
+            const account = document.getElementById('filter-account').value;
+            const type = document.getElementById('filter-type').value;
+            const search = document.getElementById('search-input').value.toLowerCase();
+
+            let filtered = allScreenshots.filter(screenshot => {
+                const matchesAccount = !account || screenshot.name.startsWith(account);
+                const matchesType = !type || screenshot.name.includes(type);
+                const matchesSearch = !search || screenshot.name.toLowerCase().includes(search);
+                return matchesAccount && matchesType && matchesSearch;
+            });
+
+            displayScreenshots(filtered);
+            document.getElementById('count-text').textContent =
+                `Showing ${filtered.length} of ${allScreenshots.length} screenshots`;
+        }
+
+        function displayScreenshots(screenshots) {
+            const container = document.getElementById('screenshots-container');
+
+            if (screenshots.length === 0) {
+                container.innerHTML = '<div class="loading">No screenshots found</div>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            screenshots.forEach(screenshot => {
+                const card = document.createElement('div');
+                card.className = 'screenshot-card';
+                card.onclick = () => openModal(screenshot.url);
+
+                const badges = [];
+                if (screenshot.name.includes('AFTER')) badges.push('<span class="badge badge-after">AFTER</span>');
+                if (screenshot.name.includes('BEFORE')) badges.push('<span class="badge badge-before">BEFORE</span>');
+                if (screenshot.name.includes('NO_BTN')) badges.push('<span class="badge badge-nobtn">NO_BTN</span>');
+
+                const date = new Date(screenshot.modified * 1000);
+                const timeStr = date.toLocaleString();
+                const sizeStr = (screenshot.size / 1024).toFixed(0) + ' KB';
+
+                card.innerHTML = `
+                    <img src="${screenshot.url}" alt="${screenshot.name}" loading="lazy">
+                    <div class="screenshot-info">
+                        <div class="screenshot-name">
+                            ${badges.join('')}
+                            ${screenshot.name}
+                        </div>
+                        <div class="screenshot-meta">
+                            <span>📅 ${timeStr}</span>
+                            <span>💾 ${sizeStr}</span>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function openModal(imageUrl) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            modal.classList.add('active');
+            modalImg.src = imageUrl;
+        }
+
+        function closeModal() {
+            document.getElementById('image-modal').classList.remove('active');
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Load screenshots on page load
+        loadScreenshots();
+
+        // Auto-refresh every 30 seconds
+        setInterval(loadScreenshots, 30000);
+    </script>
+</body>
+</html>
