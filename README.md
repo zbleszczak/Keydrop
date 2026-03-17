@@ -151,4 +151,4 @@ The web dashboard is a central hub for managing and monitoring your bot farm.
 
 ## ⚠️ Disclaimer
 
-This bot automates actions on Keydrop.com. Using bots may be against the platform's Terms of Service. Use this software at your own risk. The author is not responsible for any account suspension, ban, or other penalties incurred from using this bot. Bot was never used on keydrop, its just strictly educational
+This bot automates actions on Keydrop.com. Using bots may be against the platform's Terms of Service. Use this software at your own risk. The author is not responsible for any account suspension, ban, or other penalties incurred from using this bot. Bot was never used on keydrop, its just strictly educational.
